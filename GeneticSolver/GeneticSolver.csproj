@@ -52,6 +52,8 @@
     <Compile Include="Expressions\IValueSource.cs" />
     <Compile Include="Expressions\Operation.cs" />
     <Compile Include="Expressions\StaticValueSource.cs" />
+    <Compile Include="GenomeProperty\BooleanGenomeProperty.cs" />
+    <Compile Include="GenomeProperty\EnumGenomeProperty.cs" />
     <Compile Include="GenomeProperty\ExpressionGenomeProperty.cs" />
     <Compile Include="Mutators\BellWeightedGenomeMutator.cs" />
     <Compile Include="Mutators\GenomeMutator.cs" />
