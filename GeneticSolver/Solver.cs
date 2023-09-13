@@ -34,13 +34,16 @@ namespace GeneticSolver
             _genomeReproductionStrategies = genomeReproductionStrategies;
         }
 
-        public IGenerationResult<T, TScore> Evolve(int iterations, IEnumerable<T> originalGeneration = null)
+        public IGenerationResult<T, TScore> Evolve(int iterations, IEnumerable<T> seedGenomes = null)
         {
             GenerationResult<T, TScore> generationResult = null;
 
-            var originalGenomes = originalGeneration ?? _genomeFactory.GetNewGenomes(_solverParameters.InitialGenerationSize);
+            var seedGenomeArray = seedGenomes == null ? Array.Empty<T>() : seedGenomes.ToArray();
+            int seedGroupSize = seedGenomeArray.Length;
+            int genomesToGenerateCount = _solverParameters.InitialGenerationSize - seedGroupSize;
+            if (genomesToGenerateCount < 0) genomesToGenerateCount = 0;
+            var originalGenomes = _genomeFactory.GetNewGenomes(genomesToGenerateCount).Concat(seedGenomeArray);
             var scoredGeneration = new ScoredGeneration<T, TScore>(originalGenomes.Select(g => new GenomeInfo<T>(g, 0)), _evaluator);
-
 
             for (int generationNum = 0; generationNum < iterations; generationNum++)
             {
